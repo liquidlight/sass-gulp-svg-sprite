@@ -1,0 +1,4 @@
+{#common}$icons: (
+    sprite: (width: {swidth}px, height: {sheight}px, pngPath: '{pngPath}', svgPath: '{svgPath}'),{/common}
+{#svg}    {name}: (width: {width}px, height: {height}px, backgroundX: {positionX}px, backgroundY: {positionY}px),
+{/svg}{#common});{/common}

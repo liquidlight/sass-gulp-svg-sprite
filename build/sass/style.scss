@@ -1,0 +1,23 @@
+@import 'src/sprite';
+
+$ieSprite: '.lt-ie9' !default;
+$sprite: map-get($icons, sprite) !default;
+$baseFontSize: 16px !default;
+
+@import 'mixins';
+
+
+.class {
+	&:before {
+		@include sprite(twitter);
+		content: '';
+		float: left;
+		margin-right: 0.5em;
+	}
+
+	&:hover {
+		&:before {
+			@include sprite(twitterHover, bg);
+		}
+	}
+}

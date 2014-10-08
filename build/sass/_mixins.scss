@@ -1,0 +1,85 @@
+// Converts px to em
+@function px2em($px, $base-font-size: $baseFontSize) {
+	@if (unitless($px)) {
+		@warn "Assuming #{$px} to be in pixels, attempting to convert it into pixels for you";
+		@return px2em($px + 0px); // That may fail.
+	} @else if (unit($px) == em) {
+		@return $px;
+	}
+	@return ($px / $base-font-size) * 1em;
+}
+
+// Gets an attribute from the sass mapp
+@function sprite-attr($icon, $attr) {
+	$icon: map-get($icons, $icon);
+	@return map-get($icon, $attr);
+}
+
+@function icon-attr($icon) {
+	$attr: (
+		width: sprite-attr($icon, width),
+		height: sprite-attr($icon, height),
+		x: sprite-attr($icon, backgroundX),
+		y: sprite-attr($icon, backgroundY)
+	);
+
+	@return $attr;
+}
+
+// Sets background image and size with IE fallback
+%sprite {
+	display: inline-block;
+	background-image: url(map-get($sprite, svgPath));
+	background-size: px2em(map-get($sprite, width)) px2em(map-get($sprite, height));
+}
+%ie-sprite {
+	 background-image: url(map-get($sprite, pngPath));
+}
+
+// IE Sprite Mixin for when rotation is used
+@mixin ie-sprite($icon, $type: all) {
+	$iconMap: icon-attr($icon);
+
+	@if $ieSprite {
+		#{$ieSprite} & {
+			@if $type == all {
+				// Shares the PNG background
+				@extend %ie-sprite;
+			}
+			// Outputs dimensions of icon
+			@if $type == all or $type == size {
+				width: map-get($iconMap, width);
+				height: map-get($iconMap, height);
+			}
+			// Outputs background position
+			@if $type == all or $type == bg {
+				background-position: (map-get($iconMap, x)) (map-get($iconMap, y));
+			}
+		}
+	}
+}
+
+// For use with the gulp sprite plugin
+@mixin sprite($icon, $type: all) {
+	@if $type == all {
+		// Shares the backgrounds
+		@extend %sprite;
+	}
+
+	$iconMap: icon-attr($icon);
+
+	// Outputs dimensions in em
+	@if $type == all or $type == size {
+		width: px2em(map-get($iconMap, width) + 1);
+		height: px2em(map-get($iconMap, height) + 1);
+	}
+
+	// Outputs background position in em
+	@if $type == all or $type == bg {
+		background-position: px2em(map-get($iconMap, x)) px2em(map-get($iconMap, y));
+	}
+
+	// Add ie fallback
+	@include ie-sprite($icon, $type);
+
+}
