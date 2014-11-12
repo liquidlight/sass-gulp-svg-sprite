@@ -1,8 +1,8 @@
 // Converts px to em
-@function px2em($px, $base-font-size: $baseFontSize) {
+@function mq-px2em($px, $base-font-size: $baseFontSize) {
 	@if (unitless($px)) {
 		@warn "Assuming #{$px} to be in pixels, attempting to convert it into pixels for you";
-		@return px2em($px + 0px); // That may fail.
+		@return mq-px2em($px + 0px); // That may fail.
 	} @else if (unit($px) == em) {
 		@return $px;
 	}
@@ -30,7 +30,7 @@
 %sprite {
 	display: inline-block;
 	background-image: url(map-get($sprite, svgPath));
-	background-size: px2em(map-get($sprite, width)) px2em(map-get($sprite, height));
+	background-size: mq-px2em(map-get($sprite, width)) mq-px2em(map-get($sprite, height));
 }
 %ie-sprite {
 	 background-image: url(map-get($sprite, pngPath));
@@ -70,13 +70,13 @@
 
 	// Outputs dimensions in em
 	@if $type == all or $type == size {
-		width: px2em(map-get($iconMap, width) + 1);
-		height: px2em(map-get($iconMap, height) + 1);
+		width: mq-px2em(map-get($iconMap, width) + 1);
+		height: mq-px2em(map-get($iconMap, height) + 1);
 	}
 
 	// Outputs background position in em
 	@if $type == all or $type == bg {
-		background-position: px2em(map-get($iconMap, x)) px2em(map-get($iconMap, y));
+		background-position: mq-px2em(map-get($iconMap, x)) mq-px2em(map-get($iconMap, y));
 	}
 
 	// Add ie fallback
