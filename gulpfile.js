@@ -37,16 +37,23 @@ gulp.task('svgSprite', function () {
 
 	return gulp.src(paths.sprite.src)
 		.pipe(plugins.svgo())
-		.pipe(plugins.svgSprites({
-			cssFile: paths.sprite.css,
-			preview: false,
-			layout: 'diagonal',
-			padding: 5,
-			svg: {
-				sprite: paths.sprite.svg
-			},
-			templates: {
-				css: require("fs").readFileSync(paths.templates.src + 'sprite-template.scss', "utf-8")
+		.pipe(plugins.svgSprite({
+			"mode": {
+				"css": {
+					"spacing": {
+						"padding": 5
+					},
+					"dest": "./",
+					"layout": "diagonal",
+					"sprite": "img/sprite.svg",
+					"bust": false,
+					"render": {
+						"scss": {
+							"dest": "css/src/_sprite.scss",
+							"template": "build/tpl/sprite-template.scss"
+						}
+					}
+				}
 			}
 		}))
 		.pipe(gulp.dest(basePaths.dest));
