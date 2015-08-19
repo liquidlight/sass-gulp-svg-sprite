@@ -36,7 +36,7 @@ var changeEvent = function(evt) {
 gulp.task('svgSprite', function () {
 
 	return gulp.src(paths.sprite.src)
-		.pipe(plugins.svgo())
+		.pipe(plugins.svgmin())
 		.pipe(plugins.svgSprite({
 			"mode": {
 				"css": {
