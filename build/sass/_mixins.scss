@@ -23,7 +23,6 @@
     }
     @return ($px / $base-font-size) * 1em;
 }
-
 /// Add class for <IE9 sprite fallback
 /// @group sprite
 /// @type String
@@ -57,6 +56,18 @@ $sprite: map-get($icons, sprite) !default;
 	@return $attr;
 }
 
+/// Get the width of an icon in em
+/// @param {string} $icon - The name of the icon
+@function icon_width($icon) {
+	@return mq-px2em(sprite-attr($icon, width));
+}
+
+/// Get the height of an icon in em
+/// @param {string} $icon - The name of the icon
+@function icon_height($icon) {
+	@return mq-px2em(sprite-attr($icon, height));
+}
+
 /// Assign the correct SVG background image and dimensions to the element
 %sprite {
 	display: inline-block;
@@ -70,9 +81,9 @@ $sprite: map-get($icons, sprite) !default;
 
 /// Add a sprite PNG icon for browsers with the `$ieSprite` class with px for positioning
 /// @param {string} $icon - The name of the icon
-/// @param {string} $type [all] - The properties wanted (can be `all`, `size` or `bg`). 
-/// - `all` ensures the icon has the background, position and size. 
-/// - `size` is just for dimensions 
+/// @param {string} $type [all] - The properties wanted (can be `all`, `size` or `bg`).
+/// - `all` ensures the icon has the background, position and size.
+/// - `size` is just for dimensions
 /// - `bg` just  applies the backgrounds to an element
 /// @example scss - Usage
 /// .class {
@@ -110,7 +121,7 @@ $sprite: map-get($icons, sprite) !default;
 			}
 			// Outputs background position
 			@if $type == all or $type == bg {
-				background-position: (map-get($iconMap, x)) (map-get($iconMap, y));
+				background-position: (map-get($iconMap, x) - 5) (map-get($iconMap, y) - 5);
 			}
 		}
 	}
@@ -118,9 +129,9 @@ $sprite: map-get($icons, sprite) !default;
 
 /// Add an SVG sprite icon using em positioning, with a PNG icon for browsers with the `$ieSprite` class using px positioning
 /// @param {string} $icon - The name of the icon
-/// @param {string} $type [all] - The properties wanted (can be `all`, `size` or `bg`). 
-/// - `all` ensures the icon has the background, position and size. 
-/// - `size` is just for dimensions 
+/// @param {string} $type [all] - The properties wanted (can be `all`, `size` or `bg`).
+/// - `all` ensures the icon has the background, position and size.
+/// - `size` is just for dimensions
 /// - `bg` just  applies the backgrounds to an element
 /// @example scss - Usage
 /// .class {
@@ -136,11 +147,11 @@ $sprite: map-get($icons, sprite) !default;
 /// 	background-image: url("../img/sprite.svg");
 /// 	background-size: 34.25em 32.1875em;
 /// }
-/// 
+///
 /// .lt-ie9 .class {
 /// 	background-image: url("../img/sprite.png");
 /// }
-/// 
+///
 /// .class {
 /// 	width: 1.3125em;
 /// 	height: 1.3125em;
@@ -173,7 +184,7 @@ $sprite: map-get($icons, sprite) !default;
 
 	// Outputs background position in em
 	@if $type == all or $type == bg {
-		background-position: mq-px2em(map-get($iconMap, x)) mq-px2em(map-get($iconMap, y));
+		background-position: mq-px2em(map-get($iconMap, x) - 5) mq-px2em(map-get($iconMap, y) - 5);
 	}
 
 	// Add ie fallback

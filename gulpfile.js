@@ -20,50 +20,57 @@ var paths = {
 /*
 	Let the magic begin
 */
-
 var gulp = require('gulp');
 
-var gutil = require('gulp-util');
-var plugins = require("gulp-load-plugins")({
-	pattern: ['gulp-*', 'gulp.*'],
-	replaceString: /\bgulp[\-.]/
-});
+var $ = {
+	gutil: require('gulp-util'),
+	svgSprite: require('gulp-svg-sprite'),
+	svg2png: require('gulp-svg2png'),
+	size: require('gulp-size'),
+}
 
 var changeEvent = function(evt) {
-	gutil.log('File', gutil.colors.cyan(evt.path.replace(new RegExp('/.*(?=/' + basePaths.src + ')/'), '')), 'was', gutil.colors.magenta(evt.type));
+	$.gutil.log('File', $.gutil.colors.cyan(evt.path.replace(new RegExp('/.*(?=/' + basePaths.src + ')/'), '')), 'was', $.gutil.colors.magenta(evt.type));
 };
 
 gulp.task('svgSprite', function () {
-
 	return gulp.src(paths.sprite.src)
-		.pipe(plugins.svgo())
-		.pipe(plugins.svgSprite({
-			"mode": {
-				"css": {
-					"spacing": {
-						"padding": 5
-					},
-					"dest": "./",
-					"layout": "diagonal",
-					"sprite": "img/sprite.svg",
-					"bust": false,
-					"render": {
-						"scss": {
-							"dest": "css/src/_sprite.scss",
-							"template": "build/tpl/sprite-template.scss"
+		.pipe($.svgSprite({
+			shape: {
+				spacing: {
+					padding: 5
+				}
+			},
+			mode: {
+				css: {
+					dest: "./",
+					layout: "diagonal",
+					sprite: paths.sprite.svg,
+					bust: false,
+					render: {
+						scss: {
+							dest: "css/src/_sprite.scss",
+							template: "build/tpl/sprite-template.scss"
 						}
 					}
 				}
+			},
+			variables: {
+				mapname: "icons"
 			}
 		}))
 		.pipe(gulp.dest(basePaths.dest));
-
 });
 
 gulp.task('pngSprite', ['svgSprite'], function() {
 	return gulp.src(basePaths.dest + paths.sprite.svg)
-		.pipe(plugins.svg2png())
-		.pipe(gulp.dest(paths.images.dest));
+		.pipe($.svg2png({
+			verbose: true
+		}))
+		.pipe($.size({
+			showFiles: true
+		}))
+		.pipe(gulp.dest(basePaths.dest));
 });
 
 gulp.task('sprite', ['pngSprite']);

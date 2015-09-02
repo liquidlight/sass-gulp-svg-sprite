@@ -1,11 +1,9 @@
 {
   "devDependencies": {
-    "gulp": "^3.8.7",
-    "gulp-load-plugins": "^0.4.0",
-    "gulp-svg-sprite": "^1.0.19",
+    "gulp": "^3.9.0",
+    "gulp-size": "^2.0.0",
+    "gulp-svg-sprite": "^1.2.9",
     "gulp-svg2png": "^0.3.0",
-    "gulp-svgo": "^0.1.1",
-    "gulp-util": "^2.2.14",
-    "vinyl": "^0.4.6"
+    "gulp-util": "^3.0.6"
   }
 }
