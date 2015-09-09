@@ -64,13 +64,11 @@ gulp.task('svgSprite', function () {
 
 gulp.task('pngSprite', ['svgSprite'], function() {
 	return gulp.src(basePaths.dest + paths.sprite.svg)
-		.pipe($.svg2png({
-			verbose: true
-		}))
+		.pipe($.svg2png())
 		.pipe($.size({
 			showFiles: true
 		}))
-		.pipe(gulp.dest(basePaths.dest));
+		.pipe(gulp.dest(paths.images.dest));
 });
 
 gulp.task('sprite', ['pngSprite']);
