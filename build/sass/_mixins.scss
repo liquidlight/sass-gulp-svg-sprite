@@ -3,6 +3,16 @@
 /// @group Sprite
 ////
 
+/**
+ * The following variable and function originate from the sass-mq library.
+ * If you have already included it, you can eliminate the below
+ * https://github.com/sass-mq/sass-mq/blob/master/_mq.scss
+ */
+
+/// Base font size on the `<body>` element
+/// @type Number (unit)
+$mq-base-font-size: 16px !default;
+
 /// Convert pixels to ems
 ///
 /// @param {Number} $px - value to convert
