@@ -1,4 +1,4 @@
-##[Creating SVG Sprites using Gulp and Sass](https://www.liquidlight.co.uk/blog/article/creating-svg-sprites-using-gulp-and-sass/)
+## [Creating SVG Sprites using Gulp and Sass](https://www.liquidlight.co.uk/blog/article/creating-svg-sprites-using-gulp-and-sass/)
 
 ![Gulp and Sass](https://www.liquidlight.co.uk/fileadmin/_processed_/csm_svg-sprite-v2_6a81fd537f.png)
 
